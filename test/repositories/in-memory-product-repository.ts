@@ -18,6 +18,12 @@ export class InMemoryProductRepository implements ProductRepository {
     return this.items.slice((page - 1) * 20, page * 20);
   }
 
+  async findManyByName(name: string): Promise<Product[]> {
+    const lowerCaseName = name.toLowerCase();
+
+    return this.items.filter((item) => item.name.toLowerCase().startsWith(lowerCaseName));
+  }
+
   async save(product: Product): Promise<void> {
     const itemIndex = this.items.findIndex((item) => item.id.toString() === product.id.toString());
     this.items[itemIndex] = product;
