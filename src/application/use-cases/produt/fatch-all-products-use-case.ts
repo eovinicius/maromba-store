@@ -10,7 +10,7 @@ interface output {
   products: Product[];
 }
 
-export class FatchProductsUseCase implements UseCase<input, output> {
+export class FatchAllProductsUseCase implements UseCase<input, output> {
   constructor(private readonly productRepository: ProductRepository) {}
 
   async execute(data: input): Promise<output> {
