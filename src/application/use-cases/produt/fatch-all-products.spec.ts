@@ -1,15 +1,15 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { InMemoryProductRepository } from '../../../../test/repositories/in-memory-product-repository';
-import { FatchProductsUseCase } from './fatch-products-use-case';
+import { FatchAllProductsUseCase } from './fatch-all-products-use-case';
 import { makeProduct } from '../../../../test/factories/make-product';
 
-let sut: FatchProductsUseCase;
+let sut: FatchAllProductsUseCase;
 let inMemoryProductRepository: InMemoryProductRepository;
 
-describe('fatch stock product', () => {
+describe('fatch all products', () => {
   beforeEach(() => {
     inMemoryProductRepository = new InMemoryProductRepository();
-    sut = new FatchProductsUseCase(inMemoryProductRepository);
+    sut = new FatchAllProductsUseCase(inMemoryProductRepository);
   });
 
   it('should be able to fatch products', async () => {
