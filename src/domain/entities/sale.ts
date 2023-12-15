@@ -11,11 +11,14 @@ export interface SaleProps {
 
 export class Sale extends Entity<SaleProps> {
   constructor(props: Optional<SaleProps, 'saleDate'>, id?: UniqueEntityId) {
-    super({
-      ...props,
-      totalPrice: 0,
-      saleDate: props.saleDate ?? new Date(),
-    }, id);
+    super(
+      {
+        ...props,
+        totalPrice: 0,
+        saleDate: props.saleDate ?? new Date()
+      },
+      id
+    );
 
     this.calculateTotalPrice();
   }
