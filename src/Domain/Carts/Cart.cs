@@ -9,6 +9,8 @@ public sealed class Cart
     public List<CartItem> Itens { get; private set; }
     public DateTime CreatedAt { get; private set; }
 
+    private Cart() { }
+
     public Cart(Guid customerId)
     {
         Id = Guid.NewGuid();
