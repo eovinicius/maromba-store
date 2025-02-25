@@ -10,19 +10,21 @@ public sealed class Order : AggregateRoot
     public List<OrderItem> Itens { get; private set; }
     public DateTime CreatedAt { get; private set; }
     public OrderCoupon? OrderCoupon { get; private set; }
+    public StatusOrder Status { get; private set; }
 
     private Order() { }
-    private Order(Guid customerId, List<OrderItem> itens, DateTime createdAt, OrderCoupon? coupon = null)
+    public Order(Guid customerId, List<OrderItem> itens, DateTime createdAt, StatusOrder status, OrderCoupon? coupon = null)
     {
         CustomerId = customerId;
         Itens = itens;
         CreatedAt = createdAt;
         OrderCoupon = coupon;
+        Status = status;
     }
 
     public static Order Create(Guid customerId)
     {
-        return new Order(customerId, [], DateTime.Now);
+        return new Order(customerId, [], DateTime.Now, StatusOrder.Created);
     }
 
     public decimal GetTotal()
