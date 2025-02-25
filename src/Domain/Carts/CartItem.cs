@@ -1,6 +1,6 @@
 namespace Domain.Carts;
 
-public class CartItem
+public sealed class CartItem
 {
     public Guid ProductId { get; private set; }
     public int Quantity { get; private set; }

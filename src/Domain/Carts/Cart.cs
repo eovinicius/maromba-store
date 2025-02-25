@@ -2,7 +2,7 @@ using Domain.Products;
 
 namespace Domain.Carts;
 
-public class Cart
+public sealed class Cart
 {
     public Guid Id { get; private set; }
     public Guid CustomerId { get; private set; }

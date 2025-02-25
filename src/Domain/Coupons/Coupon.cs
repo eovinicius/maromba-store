@@ -2,7 +2,7 @@ using Domain.Abstractions;
 
 namespace Domain.Coupons;
 
-public class Coupon : AggregateRoot
+public sealed class Coupon : AggregateRoot
 {
     public string Code { get; private set; }
     public decimal Percentage { get; private set; }
