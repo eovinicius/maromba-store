@@ -4,7 +4,6 @@ namespace Domain.Orders;
 
 public sealed class OrderCoupon : ValueObject
 {
-
     public string Code { get; private set; }
     public decimal Percentage { get; private set; }
 
