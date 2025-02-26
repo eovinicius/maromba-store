@@ -5,6 +5,7 @@ public enum OrderStatus
     Created,
     Paid,
     Canceled,
+    Refunded,
     Delivered,
-    Finished,
+    Finished
 }
