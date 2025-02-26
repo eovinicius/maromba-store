@@ -1,5 +1,6 @@
 using Domain.Abstractions;
 using Domain.Coupons;
+using Domain.Customers;
 using Domain.Products;
 
 namespace Domain.Orders;
@@ -7,24 +8,26 @@ namespace Domain.Orders;
 public sealed class Order : AggregateRoot
 {
     public Guid CustomerId { get; private set; }
+    public string CustomerDocument { get; private set; }
     public List<OrderItem> Itens { get; private set; }
     public DateTime CreatedAt { get; private set; }
     public OrderCoupon? OrderCoupon { get; private set; }
-    public StatusOrder Status { get; private set; }
+    public OrderStatus Status { get; private set; }
 
     private Order() { }
-    public Order(Guid customerId, List<OrderItem> itens, DateTime createdAt, StatusOrder status, OrderCoupon? coupon = null)
+    public Order(Guid customerId, string document, List<OrderItem> itens, DateTime createdAt, OrderStatus status, OrderCoupon? coupon = null)
     {
         CustomerId = customerId;
+        CustomerDocument = document;
         Itens = itens;
         CreatedAt = createdAt;
         OrderCoupon = coupon;
         Status = status;
     }
 
-    public static Order Create(Guid customerId)
+    public static Order Create(Customer customer)
     {
-        return new Order(customerId, [], DateTime.Now, StatusOrder.Created);
+        return new Order(customer.Id, customer.Document, [], DateTime.Now, OrderStatus.Created);
     }
 
     public decimal GetTotal()
@@ -49,5 +52,10 @@ public sealed class Order : AggregateRoot
             throw new Exception("Cupom expirado ou inválido");
         }
         OrderCoupon = new OrderCoupon(coupon.Code, coupon.Percentage);
+    }
+
+    public void SetStatus(OrderStatus status)
+    {
+        Status = status;
     }
 }
