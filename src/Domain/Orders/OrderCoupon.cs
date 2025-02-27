@@ -2,7 +2,7 @@ using Domain.Abstractions;
 
 namespace Domain.Orders;
 
-public sealed class OrderCoupon : ValueObject
+public sealed class OrderCoupon
 {
     public string Code { get; private set; }
     public decimal Percentage { get; private set; }

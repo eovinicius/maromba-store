@@ -8,20 +8,18 @@ namespace Domain.Orders;
 public sealed class Order : AggregateRoot
 {
     public Guid CustomerId { get; private set; }
-    public string CustomerDocument { get; private set; }
     public OrderCoupon? OrderCoupon { get; private set; }
     public OrderStatus Status { get; private set; }
     public DateTime CreatedAt { get; private set; }
     public decimal TotalPrice { get; private set; }
-    private readonly List<OrderItem> _orderItems;
-    public IReadOnlyCollection<OrderItem> OrderItems => _orderItems.ToList();
+    private readonly List<OrderItem> _items;
+    public IReadOnlyCollection<OrderItem> Items => _items.ToList();
 
     private Order() { }
-    public Order(Guid customerId, string document, List<OrderItem> orderItems, DateTime createdAt, OrderStatus status, OrderCoupon? coupon = null)
+    public Order(Guid customerId, List<OrderItem> orderItems, DateTime createdAt, OrderStatus status, OrderCoupon? coupon = null)
     {
         CustomerId = customerId;
-        CustomerDocument = document;
-        _orderItems = orderItems;
+        _items = orderItems;
         CreatedAt = createdAt;
         OrderCoupon = coupon;
         Status = status;
@@ -29,12 +27,12 @@ public sealed class Order : AggregateRoot
 
     public static Order Create(Customer customer)
     {
-        return new Order(customer.Id, customer.Document, [], DateTime.Now, OrderStatus.Created);
+        return new Order(customer.Id, [], DateTime.Now, OrderStatus.Created);
     }
 
     public decimal GetTotal()
     {
-        var total = _orderItems.Sum(item => item.Price * item.Quantity);
+        var total = _items.Sum(item => item.Price * item.Quantity);
         if (OrderCoupon != null)
         {
             total -= OrderCoupon.CalculeteDiscount(total);
@@ -44,8 +42,8 @@ public sealed class Order : AggregateRoot
 
     public void AddItem(Product product, int quantity)
     {
-        _orderItems.Add(new OrderItem(product.Id, product.Price, quantity));
-        TotalPrice = _orderItems.Sum(item => item.Price);
+        _items.Add(new OrderItem(product.Id, product.Price, quantity));
+        TotalPrice = _items.Sum(item => item.Price);
     }
 
     public void ApplyCupom(Coupon coupon)
