@@ -1,21 +1,19 @@
+using Domain.Abstractions;
 using Domain.Products;
 
-namespace Domain.Carts;
+namespace Domain.ShoppingCarts;
 
-public sealed class ShoppingCart
+public sealed class ShoppingCart : AggregateRoot
 {
-    public Guid Id { get; private set; }
     public Guid CustomerId { get; private set; }
-    private List<ShoppingCartItem> _items;
-
-    public IReadOnlyCollection<ShoppingCartItem> Items => _items.AsReadOnly();
+    private readonly List<ShoppingCartItem> _items;
+    public IReadOnlyCollection<ShoppingCartItem> Items => _items.ToList();
     public DateTime CreatedAt { get; private set; }
 
     private ShoppingCart() { }
 
     public ShoppingCart(Guid customerId)
     {
-        Id = Guid.NewGuid();
         CustomerId = customerId;
         _items = [];
         CreatedAt = DateTime.Now;

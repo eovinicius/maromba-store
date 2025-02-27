@@ -1,6 +1,8 @@
-namespace Domain.Carts;
+using Domain.Abstractions;
 
-public sealed class ShoppingCartItem
+namespace Domain.ShoppingCarts;
+
+public sealed class ShoppingCartItem : Entity
 {
     public Guid ProductId { get; private set; }
     public int Quantity { get; private set; }
