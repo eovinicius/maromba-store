@@ -1,17 +1,19 @@
 namespace Domain.Carts;
 
-public sealed class CartItem
+public sealed class ShoppingCartItem
 {
     public Guid ProductId { get; private set; }
     public int Quantity { get; private set; }
+    public decimal UnitPrice { get; private set; }
     public decimal Price { get; private set; }
 
-    private CartItem() { }
-    public CartItem(Guid productId, decimal price, int quantity)
+    private ShoppingCartItem() { }
+    public ShoppingCartItem(Guid productId, decimal unitPriceunit, int quantity)
     {
         ProductId = productId;
-        Price = price;
+        UnitPrice = unitPriceunit;
         Quantity = quantity;
+        Price = UnitPrice * Quantity;
     }
 
     public void IncreaseQuantity(int quantity)
