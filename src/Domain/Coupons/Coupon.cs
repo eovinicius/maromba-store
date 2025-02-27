@@ -16,6 +16,11 @@ public sealed class Coupon : AggregateRoot
         ExpireDate = expireDate;
         Active = active;
     }
+    
+    public static Coupon Create(string code, decimal percentage, DateTime expireDate, bool active)
+    {
+        return new Coupon(code, percentage, expireDate, active);
+    }
 
     public bool IsValid() => Active && !IsExpired();
 
